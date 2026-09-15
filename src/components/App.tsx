@@ -1,5 +1,6 @@
-import type { Category, Results } from "../types/Types";
+import type { Category, Results } from "../types/types";
 import { useState } from "react";
+import Wheel from "./Wheel";
 
 const categories: Category[] = [
   {
@@ -15,10 +16,11 @@ const categories: Category[] = [
 ];
 
 function App() {
-  for (let i = 0; i < categories.length; i++) {
-    console.log(categories[i].items);
-  }
-  return <div className="bg-red-500">Hello world</div>;
+  return (
+    <>
+      <Wheel items={categories[0].items} />
+    </>
+  );
 }
 
 export default App;
