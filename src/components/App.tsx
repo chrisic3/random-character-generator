@@ -16,11 +16,7 @@ const categories: Category[] = [
 ];
 
 function App() {
-  return (
-    <>
-      <Wheel items={categories[0].items} />
-    </>
-  );
+  return;
 }
 
 export default App;
