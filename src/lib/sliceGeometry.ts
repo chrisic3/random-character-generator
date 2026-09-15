@@ -9,14 +9,14 @@ export function getSlicesData(
 ): string[] {
   const sliceAngle = 360 / items.length;
 
-  return items.map((value: string, i: number) => {
+  return items.map((value: string, i: number): string[] => {
     const startAngle = i * sliceAngle - 90; // -90 to rotate the first line to the top
     const endAngle = (i + 1) * sliceAngle - 90;
 
     const startX = center + radius * Math.cos(degreesToRadians(startAngle));
     const startY = center + radius * Math.sin(degreesToRadians(startAngle));
-    const endX = center + radius * Math.cos(degreesToRadians(startAngle));
-    const endY = center + radius * Math.sin(degreesToRadians(startAngle));
+    const endX = center + radius * Math.cos(degreesToRadians(endAngle));
+    const endY = center + radius * Math.sin(degreesToRadians(endAngle));
 
     const largeArcFlag = sliceAngle <= 180 ? 0 : 1;
 
