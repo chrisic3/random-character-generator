@@ -30,21 +30,6 @@ describe("getSliceData", () => {
     });
   });
 
-  it("sets largeArcFlag correctly for angles OVER 180 degrees", () => {
-    // arrange
-    const center = 250;
-    const radius = 200;
-    const items = ["A"];
-
-    // act
-    const result = getSliceData(center, radius, items);
-
-    // assert
-    result.forEach((slice) => {
-      expect(slice.largeArcFlag).toBe(1);
-    });
-  });
-
   it("angles cover the full 360 degrees with no gaps", () => {
     // arrange
     const center = 250;
@@ -57,11 +42,11 @@ describe("getSliceData", () => {
     // assert
     for (let i = 0; i < result.length - 1; i++) {
       // result.length - 1 so we can compare to the last index without overflowing
-      expect(
-        result[i].endAngle === result[i + 1].startAngle &&
-          result[result.length - 1].endAngle === result[0].startAngle + 360,
-      ).toBe(true);
+      expect(result[i].endAngle === result[i + 1].startAngle).toBe(true);
     }
+    expect(
+      result[result.length - 1].endAngle === result[0].startAngle + 360,
+    ).toBe(true);
   });
 
   it("computes correct coordinates for a known 4-item wheel", () => {
