@@ -6,10 +6,10 @@ describe("getSliceData", () => {
     // arrange
     const center = 250;
     const radius = 200;
-    const items = ["A", "B", "C", "D"];
+    const length = 4;
 
     // act
-    const result = getSliceData(center, radius, items);
+    const result = getSliceData(center, radius, length);
 
     // assert
     expect(result).toHaveLength(4);
@@ -19,10 +19,10 @@ describe("getSliceData", () => {
     // arrange
     const center = 250;
     const radius = 200;
-    const items = ["A", "B", "C", "D", "E", "F", "G"];
+    const length = 7;
 
     // act
-    const result = getSliceData(center, radius, items);
+    const result = getSliceData(center, radius, length);
 
     // assert
     result.forEach((slice) => {
@@ -34,10 +34,10 @@ describe("getSliceData", () => {
     // arrange
     const center = 250;
     const radius = 200;
-    const items = ["A", "B", "C"];
+    const length = 3;
 
     // act
-    const result = getSliceData(center, radius, items);
+    const result = getSliceData(center, radius, length);
 
     // assert
     for (let i = 0; i < result.length - 1; i++) {
@@ -53,10 +53,10 @@ describe("getSliceData", () => {
     // arrange
     const center = 250;
     const radius = 200;
-    const items = ["A", "B", "C", "D"];
+    const length = 4;
 
     // act
-    const result = getSliceData(center, radius, items);
+    const result = getSliceData(center, radius, length);
 
     // assert
     expect(result[0].startX).toBe(250);
