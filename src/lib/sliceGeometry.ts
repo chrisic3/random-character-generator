@@ -28,3 +28,7 @@ export function getSliceData(
     },
   );
 }
+
+export function buildPathString(center: number, radius: number, slice: Slice) {
+  return `M ${center} ${center} L ${slice.startX} ${slice.startY} A ${radius} ${radius} 0 ${slice.largeArcFlag} 1 ${slice.endX} ${slice.endY} Z`;
+}
