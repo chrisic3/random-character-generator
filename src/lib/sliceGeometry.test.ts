@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getSliceData } from "./sliceGeometry";
+import { getSliceData, getLabelData } from "./sliceGeometry";
 
 describe("getSliceData", () => {
   it("4 items return 4 slices", () => {
@@ -61,5 +61,29 @@ describe("getSliceData", () => {
     // assert
     expect(result[0].startX).toBe(250);
     expect(result[0].startY).toBe(50);
+  });
+});
+
+describe("getLabelData", () => {
+  it("computes correct coordinates for known inputs", () => {
+    // arrange
+    const center = 250;
+    const radius = (40 + 200) / 2;
+    const slice = {
+      startAngle: 0,
+      endAngle: 90,
+      startX: 0,
+      startY: 0,
+      largeArcFlag: 0,
+      endX: 0,
+      endY: 0,
+    };
+
+    // act
+    const result = getLabelData(center, radius, slice);
+
+    // assert
+    expect(result.x).toBeCloseTo(334.8528);
+    expect(result.y).toBeCloseTo(334.8528);
   });
 });

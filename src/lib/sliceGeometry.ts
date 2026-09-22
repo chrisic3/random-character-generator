@@ -32,3 +32,11 @@ export function getSliceData(
 export function buildPathString(center: number, radius: number, slice: Slice) {
   return `M ${center} ${center} L ${slice.startX} ${slice.startY} A ${radius} ${radius} 0 ${slice.largeArcFlag} 1 ${slice.endX} ${slice.endY} Z`;
 }
+
+export function getLabelData(center: number, radius: number, slice: Slice) {
+  const angle: number = (slice.startAngle + slice.endAngle) / 2;
+  const x: number = center + radius * Math.cos(degreesToRadians(angle));
+  const y: number = center + radius * Math.sin(degreesToRadians(angle));
+
+  return { x, y };
+}

@@ -6,7 +6,7 @@ const categories: Category[] = [
   {
     id: 1,
     name: "Hair Color",
-    items: ["Black", "Brown", "Blonde"],
+    items: ["Black", "Brown", "Blonde", "Red"],
   },
   {
     id: 2,

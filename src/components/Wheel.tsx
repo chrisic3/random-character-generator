@@ -1,5 +1,9 @@
 import type React from "react";
-import { getSliceData, buildPathString } from "../lib/sliceGeometry";
+import {
+  getSliceData,
+  buildPathString,
+  getLabelData,
+} from "../lib/sliceGeometry";
 import type { Slice } from "../types/types";
 
 const WHEEL_CENTER = 250;
