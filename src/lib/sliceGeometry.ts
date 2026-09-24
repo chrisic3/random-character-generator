@@ -34,9 +34,9 @@ export function buildPathString(center: number, radius: number, slice: Slice) {
 }
 
 export function getLabelData(center: number, radius: number, slice: Slice) {
-  const angle: number = (slice.startAngle + slice.endAngle) / 2;
-  const x: number = center + radius * Math.cos(degreesToRadians(angle));
-  const y: number = center + radius * Math.sin(degreesToRadians(angle));
+  const textAngle: number = (slice.startAngle + slice.endAngle) / 2;
+  const textX: number = center + radius * Math.cos(degreesToRadians(textAngle));
+  const textY: number = center + radius * Math.sin(degreesToRadians(textAngle));
 
-  return { x, y };
+  return { textAngle, textX, textY };
 }

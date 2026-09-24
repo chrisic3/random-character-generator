@@ -17,14 +17,31 @@ function Wheel({ items }: { items: string[] }): React.JSX.Element {
     items.length,
   );
   const paths = slices.map((slice: Slice, index: number): React.JSX.Element => {
+    const { textAngle, textX, textY } = getLabelData(
+      WHEEL_CENTER,
+      (WHEEL_RADIUS + WHEEL_BUTTON_RADIUS) / 2,
+      slice,
+    );
+
     return (
-      <path
-        key={index}
-        d={buildPathString(WHEEL_CENTER, WHEEL_RADIUS, slice)}
-        stroke="black"
-        strokeWidth="3"
-        fill="teal"
-      />
+      <>
+        <path
+          key={index}
+          d={buildPathString(WHEEL_CENTER, WHEEL_RADIUS, slice)}
+          stroke="black"
+          strokeWidth="3"
+          fill="teal"
+        />
+        <text
+          x={textX}
+          y={textY}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          transform={`rotate(${textAngle}, ${textX}, ${textY})`}
+        >
+          {items[index]}
+        </text>
+      </>
     );
   });
 

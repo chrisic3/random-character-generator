@@ -83,7 +83,8 @@ describe("getLabelData", () => {
     const result = getLabelData(center, radius, slice);
 
     // assert
-    expect(result.x).toBeCloseTo(334.8528);
-    expect(result.y).toBeCloseTo(334.8528);
+    expect(result.textAngle).toBeCloseTo(45);
+    expect(result.textX).toBeCloseTo(334.8528);
+    expect(result.textY).toBeCloseTo(334.8528);
   });
 });
