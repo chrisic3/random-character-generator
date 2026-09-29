@@ -1,7 +1,7 @@
 export type Category = {
   id: number;
   name: string;
-  items: string[];
+  items: WheelItem[];
 };
 
 export type Results = Record<string, string>;
@@ -14,4 +14,9 @@ export type Slice = {
   largeArcFlag: number;
   endX: number;
   endY: number;
+};
+
+export type WheelItem = {
+  name: string;
+  winChance?: number;
 };

@@ -4,13 +4,13 @@ import {
   buildPathString,
   getLabelData,
 } from "../lib/sliceGeometry";
-import type { Slice } from "../types/types";
+import type { Slice, WheelItem } from "../types/types";
 
 const WHEEL_CENTER = 250;
 const WHEEL_RADIUS = 200;
 const WHEEL_BUTTON_RADIUS = 40;
 
-function Wheel({ items }: { items: string[] }): React.JSX.Element {
+function Wheel({ items }: { items: WheelItem[] }): React.JSX.Element {
   const slices: Slice[] = getSliceData(
     WHEEL_CENTER,
     WHEEL_RADIUS,
@@ -39,7 +39,7 @@ function Wheel({ items }: { items: string[] }): React.JSX.Element {
           dominantBaseline="middle"
           transform={`rotate(${textAngle}, ${textX}, ${textY})`}
         >
-          {items[index]}
+          {items[index].name}
         </text>
       </>
     );
