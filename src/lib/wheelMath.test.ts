@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { getItemWeights, pickWinningIndex } from "./wheelMath";
 import type { WheelItem } from "../types/types";
+import { act } from "react";
 
 describe("getItemWeights", () => {
   it("takes 4 items with 1 special weight item", () => {
@@ -96,6 +97,7 @@ describe("pickWinningIndex", () => {
 
   it("returns the weighted item approximately 30% of wins over 10,000 trials", () => {
     // arrange
+    const tolerance = 0.01;
     const weights = [1, 1, 1, 1.2857];
     const counts = new Array(weights.length).fill(0);
     const totalWeight = weights.reduce(
@@ -115,6 +117,9 @@ describe("pickWinningIndex", () => {
     counts.forEach((value, index) => {
       const expectedPercent = weights[index] / totalWeight;
       const actualPercent = value / 10000;
+
+      expect(actualPercent).toBeGreaterThanOrEqual(expectedPercent - tolerance);
+      expect(actualPercent).toBeLessThanOrEqual(expectedPercent + tolerance);
     });
   });
 });
