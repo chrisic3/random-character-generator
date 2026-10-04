@@ -57,6 +57,12 @@ function Wheel({ items }: { items: WheelItem[] }): React.JSX.Element {
           strokeWidth="5"
           fill="none"
         />
+        <path
+          d="M 250 75 L 235 45 A 17 17 0 1 1 265 45 Z"
+          stroke="black"
+          fill="yellow"
+        />
+        <circle cx="250" cy="35" r="5" stroke="black" fill="black" />
         <circle
           cx={WHEEL_CENTER}
           cy={WHEEL_CENTER}
@@ -71,3 +77,5 @@ function Wheel({ items }: { items: WheelItem[] }): React.JSX.Element {
 }
 
 export default Wheel;
+
+//M ${center} ${center} L ${slice.startX} ${slice.startY} A ${radius} ${radius} 0 ${slice.largeArcFlag} 1 ${slice.endX} ${slice.endY} Z
