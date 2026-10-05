@@ -1,7 +1,10 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { getItemWeights, pickWinningIndex } from "./wheelMath";
+import {
+  getItemWeights,
+  pickWinningIndex,
+  getLandingPosition,
+} from "./wheelMath";
 import type { WheelItem } from "../types/types";
-import { act } from "react";
 
 describe("getItemWeights", () => {
   it("takes 4 items with 1 special weight item", () => {
@@ -121,5 +124,19 @@ describe("pickWinningIndex", () => {
       expect(actualPercent).toBeGreaterThanOrEqual(expectedPercent - tolerance);
       expect(actualPercent).toBeLessThanOrEqual(expectedPercent + tolerance);
     });
+  });
+});
+
+describe("getLandingPosition", () => {
+  it("takes the winning index (1) and slice count (4) and returns 225 degrees", () => {
+    // arrange
+    const winningIndex = 1;
+    const sliceCount = 4;
+
+    // act
+    const result = getLandingPosition(winningIndex, sliceCount);
+
+    // assert
+    expect(result).toBeCloseTo(225, 4);
   });
 });
