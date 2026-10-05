@@ -46,3 +46,10 @@ export function pickWinningIndex(items: number[]): number {
 
   return winningIndex;
 }
+
+export function getLandingPosition(
+  winningIndex: number,
+  sliceCount: number,
+): number {
+  return -1;
+}
