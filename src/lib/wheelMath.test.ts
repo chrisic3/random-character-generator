@@ -3,7 +3,7 @@ import {
   getItemWeights,
   pickWinningIndex,
   getLandingPosition,
-  getTotalRotations,
+  getTotalRotation,
 } from "./wheelMath";
 import type { WheelItem } from "../types/types";
 
@@ -173,7 +173,7 @@ describe("getTotalRotation", () => {
     const fullRotations = 5;
 
     // act
-    const result = getTotalRotations(landingPosition, fullRotations);
+    const result = getTotalRotation(landingPosition, fullRotations);
 
     // assert
     expect(result).toBeCloseTo(2025, 4);

@@ -54,3 +54,10 @@ export function getLandingPosition(
   const sliceAngle = 360 / sliceCount;
   return 360 - (winningIndex * sliceAngle + sliceAngle / 2);
 }
+
+export function getTotalRotation(
+  landingPosition: number,
+  fullRotations: number,
+): number {
+  return 360 * fullRotations + landingPosition;
+}
