@@ -167,7 +167,7 @@ describe("getLandingPosition", () => {
 });
 
 describe("getTotalRotation", () => {
-  it("takes the landing position and full rotation count and returns the total rotation", () => {
+  it("takes the landingPosition (whole number) and fullRotation and returns the totalRotation", () => {
     //arrange
     const landingPosition = 225;
     const fullRotations = 5;
@@ -177,5 +177,17 @@ describe("getTotalRotation", () => {
 
     // assert
     expect(result).toBeCloseTo(2025, 4);
+  });
+
+  it("takes the landingPosition (decimal number) and fullRotation and returns the totalRotation", () => {
+    //arrange
+    const landingPosition = 77.14286;
+    const fullRotations = 3;
+
+    // act
+    const result = getTotalRotation(landingPosition, fullRotations);
+
+    // assert
+    expect(result).toBeCloseTo(1157.14286, 4);
   });
 });
