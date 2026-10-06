@@ -3,6 +3,7 @@ import {
   getItemWeights,
   pickWinningIndex,
   getLandingPosition,
+  getTotalRotations,
 } from "./wheelMath";
 import type { WheelItem } from "../types/types";
 
@@ -162,5 +163,19 @@ describe("getLandingPosition", () => {
 
     // assert
     expect(result).toBeCloseTo(77.14286, 4);
+  });
+});
+
+describe("getTotalRotation", () => {
+  it("takes the landing position and full rotation count and returns the total rotation", () => {
+    //arrange
+    const landingPosition = 225;
+    const fullRotations = 5;
+
+    // act
+    const result = getTotalRotations(landingPosition, fullRotations);
+
+    // assert
+    expect(result).toBeCloseTo(2025, 4);
   });
 });
