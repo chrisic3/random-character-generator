@@ -139,4 +139,28 @@ describe("getLandingPosition", () => {
     // assert
     expect(result).toBeCloseTo(225, 4);
   });
+
+  it("takes the winning index (2) and slice count (4) and returns 135 degrees", () => {
+    // arrange
+    const winningIndex = 2;
+    const sliceCount = 4;
+
+    // act
+    const result = getLandingPosition(winningIndex, sliceCount);
+
+    // assert
+    expect(result).toBeCloseTo(135, 4);
+  });
+
+  it("takes the winning index (5) and slice count (7) and returns about 77.14260 degrees", () => {
+    // arrange
+    const winningIndex = 5;
+    const sliceCount = 7;
+
+    // act
+    const result = getLandingPosition(winningIndex, sliceCount);
+
+    // assert
+    expect(result).toBeCloseTo(77.14286, 4);
+  });
 });

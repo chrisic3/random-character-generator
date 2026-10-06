@@ -51,5 +51,6 @@ export function getLandingPosition(
   winningIndex: number,
   sliceCount: number,
 ): number {
-  return -1;
+  const sliceAngle = 360 / sliceCount;
+  return 360 - (winningIndex * sliceAngle + sliceAngle / 2);
 }
