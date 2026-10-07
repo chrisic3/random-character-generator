@@ -24,9 +24,8 @@ function Wheel({ items }: { items: WheelItem[] }): React.JSX.Element {
     );
 
     return (
-      <>
+      <g key={index}>
         <path
-          key={index}
           d={buildPathString(WHEEL_CENTER, WHEEL_RADIUS, slice)}
           stroke="black"
           strokeWidth="3"
@@ -41,7 +40,7 @@ function Wheel({ items }: { items: WheelItem[] }): React.JSX.Element {
         >
           {items[index].name}
         </text>
-      </>
+      </g>
     );
   });
 
