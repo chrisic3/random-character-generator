@@ -4,7 +4,6 @@ import Wheel from "./Wheel";
 
 const categories: Category[] = [
   {
-    id: 1,
     name: "Hair Type",
     items: [
       { name: "Straight" },
@@ -16,7 +15,6 @@ const categories: Category[] = [
     ],
   },
   {
-    id: 2,
     name: "Hair Color",
     items: [
       { name: "Black" },
@@ -26,42 +24,34 @@ const categories: Category[] = [
     ],
   },
   {
-    id: 3,
     name: "Eye Color",
     items: [],
   },
   {
-    id: 4,
     name: "Horns",
     items: [{ name: "None", winChance: 0.3 }],
   },
   {
-    id: 5,
     name: "Wings",
     items: [{ name: "None", winChance: 0.3 }],
   },
   {
-    id: 6,
     name: "Tail",
     items: [{ name: "None", winChance: 0.3 }],
   },
   {
-    id: 7,
     name: "Accessory",
     items: [{ name: "None", winChance: 0.3 }],
   },
   {
-    id: 8,
     name: "Familiar",
     items: [{ name: "None", winChance: 0.3 }],
   },
   {
-    id: 9,
     name: "Class",
     items: [],
   },
   {
-    id: 10,
     name: "Archetype",
     items: [],
   },
