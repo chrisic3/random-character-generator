@@ -1,4 +1,7 @@
 import type React from "react";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import {
   getSliceData,
   buildPathString,
@@ -6,11 +9,15 @@ import {
 } from "../lib/sliceGeometry";
 import type { Slice, WheelItem } from "../types/types";
 
+gsap.registerPlugin(useGSAP);
+
 const WHEEL_CENTER = 250;
 const WHEEL_RADIUS = 200;
 const WHEEL_BUTTON_RADIUS = 40;
 
 function Wheel({ items }: { items: WheelItem[] }): React.JSX.Element {
+  const container = useRef<HTMLDivElement>(null);
+  const { contextSafe } = useGSAP({ scope: container });
   const slices: Slice[] = getSliceData(
     WHEEL_CENTER,
     WHEEL_RADIUS,
@@ -44,10 +51,17 @@ function Wheel({ items }: { items: WheelItem[] }): React.JSX.Element {
     );
   });
 
+  const spinWheel = contextSafe(() => {
+    gsap.to(".wheel", {
+      rotation: 180,
+      svgOrigin: `${WHEEL_CENTER} ${WHEEL_CENTER}`,
+    });
+  });
+
   return (
-    <div>
+    <div ref={container}>
       <svg viewBox="0 0 500 500">
-        <g>{paths}</g>
+        <g className="wheel">{paths}</g>
         <circle
           cx={WHEEL_CENTER}
           cy={WHEEL_CENTER}
@@ -69,6 +83,7 @@ function Wheel({ items }: { items: WheelItem[] }): React.JSX.Element {
           stroke="black"
           strokeWidth="3"
           fill="salmon"
+          onClick={spinWheel}
         />
       </svg>
     </div>
@@ -76,5 +91,3 @@ function Wheel({ items }: { items: WheelItem[] }): React.JSX.Element {
 }
 
 export default Wheel;
-
-//M ${center} ${center} L ${slice.startX} ${slice.startY} A ${radius} ${radius} 0 ${slice.largeArcFlag} 1 ${slice.endX} ${slice.endY} Z
