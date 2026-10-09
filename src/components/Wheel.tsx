@@ -8,6 +8,12 @@ import {
   getLabelData,
 } from "../lib/sliceGeometry";
 import type { Slice, WheelItem } from "../types/types";
+import {
+  getItemWeights,
+  getLandingPosition,
+  getTotalRotation,
+  pickWinningIndex,
+} from "../lib/wheelMath";
 
 gsap.registerPlugin(useGSAP);
 
@@ -50,11 +56,19 @@ function Wheel({ items }: { items: WheelItem[] }): React.JSX.Element {
       </g>
     );
   });
+  const winningItem = pickWinningIndex(getItemWeights(items));
+  console.log(winningItem);
+  const landingPosition = getTotalRotation(
+    getLandingPosition(winningItem, items.length),
+    5,
+  );
 
   const spinWheel = contextSafe(() => {
     gsap.to(".wheel", {
-      rotation: 180,
+      rotation: landingPosition,
       svgOrigin: `${WHEEL_CENTER} ${WHEEL_CENTER}`,
+      ease: "power2.out",
+      duration: 5,
     });
   });
 
