@@ -78,6 +78,7 @@ function Wheel({
       svgOrigin: `${WHEEL_CENTER} ${WHEEL_CENTER}`,
       ease: "power2.out",
       duration: 5,
+      onComplete: onResult(winningName),
     });
   });
 
