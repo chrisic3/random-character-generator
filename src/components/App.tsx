@@ -60,7 +60,7 @@ const categories: Category[] = [
 function App() {
   return (
     <>
-      <Wheel items={categories[0].items} />
+      <Wheel items={categories[0].items} onResult={console.log} />
     </>
   );
 }

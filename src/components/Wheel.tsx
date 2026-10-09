@@ -21,7 +21,13 @@ const WHEEL_CENTER = 250;
 const WHEEL_RADIUS = 200;
 const WHEEL_BUTTON_RADIUS = 40;
 
-function Wheel({ items }: { items: WheelItem[] }): React.JSX.Element {
+function Wheel({
+  items,
+  onResult,
+}: {
+  items: WheelItem[];
+  onResult: (winner: string) => void;
+}): React.JSX.Element {
   const container = useRef<HTMLDivElement>(null);
   const { contextSafe } = useGSAP({ scope: container });
   const slices: Slice[] = getSliceData(
@@ -56,14 +62,17 @@ function Wheel({ items }: { items: WheelItem[] }): React.JSX.Element {
       </g>
     );
   });
-  const winningItem = pickWinningIndex(getItemWeights(items));
-  console.log(winningItem);
-  const landingPosition = getTotalRotation(
-    getLandingPosition(winningItem, items.length),
-    5,
-  );
 
   const spinWheel = contextSafe(() => {
+    const winningItem = pickWinningIndex(getItemWeights(items));
+    console.log(winningItem);
+    const landingPosition = getTotalRotation(
+      getLandingPosition(winningItem, items.length),
+      5,
+    );
+    const winningName = items[winningItem].name;
+    console.log(winningName);
+
     gsap.to(".wheel", {
       rotation: landingPosition,
       svgOrigin: `${WHEEL_CENTER} ${WHEEL_CENTER}`,
