@@ -65,20 +65,18 @@ function Wheel({
 
   const spinWheel = contextSafe(() => {
     const winningItem = pickWinningIndex(getItemWeights(items));
-    console.log(winningItem);
     const landingPosition = getTotalRotation(
       getLandingPosition(winningItem, items.length),
       5,
     );
     const winningName = items[winningItem].name;
-    console.log(winningName);
 
     gsap.to(".wheel", {
       rotation: landingPosition,
       svgOrigin: `${WHEEL_CENTER} ${WHEEL_CENTER}`,
       ease: "power2.out",
       duration: 5,
-      onComplete: onResult(winningName),
+      onComplete: () => onResult(winningName),
     });
   });
 
