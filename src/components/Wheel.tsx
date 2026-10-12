@@ -29,6 +29,7 @@ function Wheel({
   onResult: (winner: string) => void;
 }): React.JSX.Element {
   const container = useRef<HTMLDivElement>(null);
+  const hasSpinStarted = useRef<boolean>(false);
   const { contextSafe } = useGSAP({ scope: container });
   const slices: Slice[] = getSliceData(
     WHEEL_CENTER,
@@ -64,6 +65,8 @@ function Wheel({
   });
 
   const spinWheel = contextSafe(() => {
+    if (hasSpinStarted.current) return;
+    hasSpinStarted.current = true;
     const winningItem = pickWinningIndex(getItemWeights(items));
     const landingPosition = getTotalRotation(
       getLandingPosition(winningItem, items.length),
