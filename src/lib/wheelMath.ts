@@ -1,5 +1,7 @@
 import type { WheelItem } from "../types/types";
 
+const MARGIN_FRACTION = 0.05;
+
 // take items and return list of weights
 export function getItemWeights(items: WheelItem[]) {
   if (items.length === 0) {
@@ -52,7 +54,15 @@ export function getLandingPosition(
   sliceCount: number,
 ): number {
   const sliceAngle = 360 / sliceCount;
-  return 360 - (winningIndex * sliceAngle + sliceAngle / 2);
+  const marginDegree = sliceAngle * MARGIN_FRACTION;
+  const randomFraction = Math.random();
+
+  return (
+    360 -
+    (winningIndex * sliceAngle +
+      marginDegree +
+      (sliceAngle - marginDegree * 2) * randomFraction)
+  );
 }
 
 export function getTotalRotation(
