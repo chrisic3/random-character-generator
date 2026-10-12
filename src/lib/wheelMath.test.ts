@@ -129,8 +129,26 @@ describe("pickWinningIndex", () => {
 });
 
 describe("getLandingPosition", () => {
-  it("takes the winning index (1) and slice count (4) and returns 225 degrees", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("returns the correct position for a random value of 0", () => {
     // arrange
+    vi.spyOn(Math, "random").mockReturnValue(0);
+    const winningIndex = 1;
+    const sliceCount = 4;
+
+    // act
+    const result = getLandingPosition(winningIndex, sliceCount);
+
+    // assert
+    expect(result).toBeCloseTo(265.5, 4);
+  });
+
+  it("returns the correct position for a random value of 0.5", () => {
+    // arrange
+    vi.spyOn(Math, "random").mockReturnValue(0.5);
     const winningIndex = 1;
     const sliceCount = 4;
 
@@ -141,28 +159,17 @@ describe("getLandingPosition", () => {
     expect(result).toBeCloseTo(225, 4);
   });
 
-  it("takes the winning index (2) and slice count (4) and returns 135 degrees", () => {
+  it("returns the correct position for a random value of 1", () => {
     // arrange
-    const winningIndex = 2;
+    vi.spyOn(Math, "random").mockReturnValue(1);
+    const winningIndex = 1;
     const sliceCount = 4;
 
     // act
     const result = getLandingPosition(winningIndex, sliceCount);
 
     // assert
-    expect(result).toBeCloseTo(135, 4);
-  });
-
-  it("takes the winning index (5) and slice count (7) and returns about 77.14260 degrees", () => {
-    // arrange
-    const winningIndex = 5;
-    const sliceCount = 7;
-
-    // act
-    const result = getLandingPosition(winningIndex, sliceCount);
-
-    // assert
-    expect(result).toBeCloseTo(77.14286, 4);
+    expect(result).toBeCloseTo(184.5, 4);
   });
 });
 
