@@ -58,9 +58,30 @@ const categories: Category[] = [
 ];
 
 function App() {
+  const [results, setResults] = useState({});
+  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
+
+  const handleResult = () => {
+    const prev = { ...results };
+    setResults({ ...prev, [categories[currentCategoryIndex].name]: "test" });
+  };
+
+  const handleClick = () => {
+    if (currentCategoryIndex != categories.length - 1) {
+      setCurrentCategoryIndex(
+        (currentCategoryIndex) => (currentCategoryIndex += 1),
+      );
+    }
+  };
+
   return (
     <>
-      <Wheel items={categories[0].items} onResult={console.log} />
+      <h1>{categories[currentCategoryIndex].name}</h1>
+      <Wheel
+        items={categories[currentCategoryIndex].items}
+        onResult={handleResult}
+      />
+      <button onClick={handleClick}>Next</button>
     </>
   );
 }

@@ -67,6 +67,7 @@ function Wheel({
   const spinWheel = contextSafe(() => {
     if (hasSpinStarted.current) return;
     hasSpinStarted.current = true;
+
     const winningItem = pickWinningIndex(getItemWeights(items));
     const landingPosition = getTotalRotation(
       getLandingPosition(winningItem, items.length),
