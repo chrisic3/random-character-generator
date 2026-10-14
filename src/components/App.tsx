@@ -61,9 +61,13 @@ function App() {
   const [results, setResults] = useState({});
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
 
-  const handleResult = () => {
-    const prev = { ...results };
-    setResults({ ...prev, [categories[currentCategoryIndex].name]: "test" });
+  const handleResult = (winningName: string) => {
+    setResults((prev) => {
+      return {
+        ...prev,
+        [categories[currentCategoryIndex].name]: winningName,
+      };
+    });
   };
 
   const handleClick = () => {
@@ -76,8 +80,10 @@ function App() {
 
   return (
     <>
-      <h1>{categories[currentCategoryIndex].name}</h1>
+      <h1>RANDOM CHARACTER GENERATOR</h1>
+      <h2>{categories[currentCategoryIndex].name}</h2>
       <Wheel
+        key={currentCategoryIndex}
         items={categories[currentCategoryIndex].items}
         onResult={handleResult}
       />
