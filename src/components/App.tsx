@@ -20,14 +20,13 @@ function App() {
   };
 
   const handleNext = () => {
-    if (!isLastCategory) {
-      setCurrentCategoryIndex(
-        (currentCategoryIndex) => (currentCategoryIndex += 1),
-      );
-    }
+    setCurrentCategoryIndex((prev) => prev + 1);
   };
 
-  const handleReset = () => {};
+  const handleReset = () => {
+    setCurrentCategoryIndex(0);
+    setResults({});
+  };
 
   return (
     <>
