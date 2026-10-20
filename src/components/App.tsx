@@ -43,6 +43,16 @@ function App() {
       {hasResult && isLastCategory && (
         <button onClick={handleReset}>Reset</button>
       )}
+      <ul>
+        {Object.entries(results).map((pair) => {
+          const [key, val] = pair;
+          return (
+            <li key={key}>
+              {key}: {val}
+            </li>
+          );
+        })}
+      </ul>
     </>
   );
 }
