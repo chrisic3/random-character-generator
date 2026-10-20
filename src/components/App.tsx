@@ -4,36 +4,46 @@ import { useState } from "react";
 import Wheel from "./Wheel";
 
 function App() {
-  const [results, setResults] = useState({});
+  const [results, setResults] = useState<Results>({});
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
+  const currentCategory = categories[currentCategoryIndex];
+  const isLastCategory = currentCategoryIndex === categories.length - 1;
+  const hasResult = results[currentCategory.name] !== undefined;
 
   const handleResult = (winningName: string) => {
     setResults((prev) => {
       return {
         ...prev,
-        [categories[currentCategoryIndex].name]: winningName,
+        [currentCategory.name]: winningName,
       };
     });
   };
 
-  const handleClick = () => {
-    if (currentCategoryIndex != categories.length - 1) {
+  const handleNext = () => {
+    if (!isLastCategory) {
       setCurrentCategoryIndex(
         (currentCategoryIndex) => (currentCategoryIndex += 1),
       );
     }
   };
 
+  const handleReset = () => {};
+
   return (
     <>
       <h1>RANDOM CHARACTER GENERATOR</h1>
-      <h2>{categories[currentCategoryIndex].name}</h2>
+      <h2>{currentCategory.name}</h2>
       <Wheel
         key={currentCategoryIndex}
-        items={categories[currentCategoryIndex].items}
+        items={currentCategory.items}
         onResult={handleResult}
       />
-      <button onClick={handleClick}>Next</button>
+      {hasResult && !isLastCategory && (
+        <button onClick={handleNext}>Next</button>
+      )}
+      {hasResult && isLastCategory && (
+        <button onClick={handleReset}>Reset</button>
+      )}
     </>
   );
 }
