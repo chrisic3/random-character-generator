@@ -9,7 +9,7 @@ export const categories: Category[] = [
       { name: "Curly" },
       { name: "Short" },
       { name: "Long" },
-      { name: "Bald", winChance: 0.3 },
+      { name: "Bald" },
     ],
   },
   {

@@ -2,6 +2,7 @@ import type { Results } from "../types/types";
 import { categories } from "../data";
 import { useState } from "react";
 import Wheel from "./Wheel";
+import ResultsList from "./ResultsList";
 
 function App() {
   const [results, setResults] = useState<Results>({});
@@ -43,16 +44,7 @@ function App() {
       {hasResult && isLastCategory && (
         <button onClick={handleReset}>Reset</button>
       )}
-      <ul>
-        {Object.entries(results).map((pair) => {
-          const [key, val] = pair;
-          return (
-            <li key={key}>
-              {key}: {val}
-            </li>
-          );
-        })}
-      </ul>
+      <ResultsList results={results} />
     </>
   );
 }
