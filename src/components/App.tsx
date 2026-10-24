@@ -10,6 +10,11 @@ function App() {
   const currentCategory = categories[currentCategoryIndex];
   const isLastCategory = currentCategoryIndex === categories.length - 1;
   const hasResult = results[currentCategory.name] !== undefined;
+  const mode = !hasResult
+    ? "spin"
+    : hasResult && !isLastCategory
+      ? "next"
+      : "reset";
 
   const handleResult = (winningName: string) => {
     setResults((prev) => {
@@ -20,14 +25,23 @@ function App() {
     });
   };
 
-  const handleNext = () => {
-    setCurrentCategoryIndex((prev) => prev + 1);
+  const onClick = () => {
+    if (mode === "next") {
+      setCurrentCategoryIndex((prev) => prev + 1);
+    } else if (mode === "reset") {
+      setCurrentCategoryIndex(0);
+      setResults({});
+    }
   };
 
-  const handleReset = () => {
-    setCurrentCategoryIndex(0);
-    setResults({});
-  };
+  // const handleNext = () => {
+  //   setCurrentCategoryIndex((prev) => prev + 1);
+  // };
+
+  // const handleReset = () => {
+  //   setCurrentCategoryIndex(0);
+  //   setResults({});
+  // };
 
   return (
     <>
@@ -36,14 +50,16 @@ function App() {
       <Wheel
         key={currentCategoryIndex}
         items={currentCategory.items}
+        mode={mode}
         onResult={handleResult}
+        onClick={onClick}
       />
-      {hasResult && !isLastCategory && (
+      {/* {hasResult && !isLastCategory && (
         <button onClick={handleNext}>Next</button>
       )}
       {hasResult && isLastCategory && (
         <button onClick={handleReset}>Reset</button>
-      )}
+      )} */}
       <ResultsList results={results} />
     </>
   );

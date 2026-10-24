@@ -19,3 +19,18 @@ export type WheelItem = {
   name: string;
   winChance?: number;
 };
+
+type SpinWheelProps = {
+  items: WheelItem[];
+  onResult: (winner: string) => void;
+  mode: "spin";
+};
+
+type AdvanceWheelProps = {
+  items: WheelItem[];
+  onResult: (winner: string) => void;
+  mode: "next" | "reset";
+  onClick: () => void;
+};
+
+export type WheelProps = SpinWheelProps | AdvanceWheelProps;

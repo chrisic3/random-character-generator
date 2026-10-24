@@ -7,7 +7,7 @@ import {
   buildPathString,
   getLabelData,
 } from "../lib/sliceGeometry";
-import type { Slice, WheelItem } from "../types/types";
+import type { Slice, WheelProps } from "../types/types";
 import {
   getItemWeights,
   getLandingPosition,
@@ -21,20 +21,16 @@ const WHEEL_CENTER = 250;
 const WHEEL_RADIUS = 200;
 const WHEEL_BUTTON_RADIUS = 40;
 
-function Wheel({
-  items,
-  onResult,
-}: {
-  items: WheelItem[];
-  onResult: (winner: string) => void;
-}): React.JSX.Element {
+function Wheel(props: WheelProps): React.JSX.Element {
+  const label =
+    props.mode === "spin" ? "Spin" : props.mode === "next" ? "Next" : "Reset";
   const container = useRef<HTMLDivElement>(null);
   const hasSpinStarted = useRef<boolean>(false);
   const { contextSafe } = useGSAP({ scope: container });
   const slices: Slice[] = getSliceData(
     WHEEL_CENTER,
     WHEEL_RADIUS,
-    items.length,
+    props.items.length,
   );
   const paths = slices.map((slice: Slice, index: number): React.JSX.Element => {
     const { textAngle, textX, textY } = getLabelData(
@@ -58,30 +54,34 @@ function Wheel({
           dominantBaseline="middle"
           transform={`rotate(${textAngle}, ${textX}, ${textY})`}
         >
-          {items[index].name}
+          {props.items[index].name}
         </text>
       </g>
     );
   });
 
   const spinWheel = contextSafe(() => {
-    if (hasSpinStarted.current) return;
-    hasSpinStarted.current = true;
+    if (props.mode === "spin") {
+      if (hasSpinStarted.current) return;
+      hasSpinStarted.current = true;
 
-    const winningItem = pickWinningIndex(getItemWeights(items));
-    const landingPosition = getTotalRotation(
-      getLandingPosition(winningItem, items.length),
-      5,
-    );
-    const winningName = items[winningItem].name;
+      const winningItem = pickWinningIndex(getItemWeights(props.items));
+      const landingPosition = getTotalRotation(
+        getLandingPosition(winningItem, props.items.length),
+        5,
+      );
+      const winningName = props.items[winningItem].name;
 
-    gsap.to(".wheel", {
-      rotation: landingPosition,
-      svgOrigin: `${WHEEL_CENTER} ${WHEEL_CENTER}`,
-      ease: "power2.out",
-      duration: 5,
-      onComplete: () => onResult(winningName),
-    });
+      gsap.to(".wheel", {
+        rotation: landingPosition,
+        svgOrigin: `${WHEEL_CENTER} ${WHEEL_CENTER}`,
+        ease: "power2.out",
+        duration: 5,
+        onComplete: () => props.onResult(winningName),
+      });
+    } else {
+      props.onClick();
+    }
   });
 
   return (
@@ -102,15 +102,24 @@ function Wheel({
           fill="yellow"
         />
         <circle cx="250" cy="35" r="5" stroke="black" fill="black" />
-        <circle
-          cx={WHEEL_CENTER}
-          cy={WHEEL_CENTER}
-          r={WHEEL_BUTTON_RADIUS}
-          stroke="black"
-          strokeWidth="3"
-          fill="salmon"
-          onClick={spinWheel}
-        />
+        <g onClick={spinWheel}>
+          <circle
+            cx={WHEEL_CENTER}
+            cy={WHEEL_CENTER}
+            r={WHEEL_BUTTON_RADIUS}
+            stroke="black"
+            strokeWidth="3"
+            fill="salmon"
+          />
+          <text
+            x={WHEEL_CENTER}
+            y={WHEEL_CENTER}
+            textAnchor="middle"
+            dominantBaseline="middle"
+          >
+            {label}
+          </text>
+        </g>
       </svg>
     </div>
   );
