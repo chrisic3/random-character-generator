@@ -102,7 +102,7 @@ function Wheel(props: WheelProps): React.JSX.Element {
           fill="yellow"
         />
         <circle cx="250" cy="35" r="5" stroke="black" fill="black" />
-        <g onClick={spinWheel}>
+        <g className="cursor-pointer" onClick={spinWheel}>
           <circle
             cx={WHEEL_CENTER}
             cy={WHEEL_CENTER}
@@ -116,6 +116,7 @@ function Wheel(props: WheelProps): React.JSX.Element {
             y={WHEEL_CENTER}
             textAnchor="middle"
             dominantBaseline="middle"
+            pointerEvents="none"
           >
             {label}
           </text>
