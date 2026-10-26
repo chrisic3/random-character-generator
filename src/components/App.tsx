@@ -36,17 +36,21 @@ function App() {
       : ({ mode: "reset", onClick: handleReset } as const);
 
   return (
-    <>
-      <h1>RANDOM CHARACTER GENERATOR</h1>
-      <h2>{currentCategory.name}</h2>
-      <Wheel
-        key={currentCategoryIndex}
-        items={currentCategory.items}
-        onResult={handleResult}
-        {...modeProps}
-      />
-      <ResultsList results={results} />
-    </>
+    <div className="flex flex-col gap-6 p-6 items-center">
+      <header className="text-center outline">
+        <h1 className="text-3xl font-bold">RANDOM CHARACTER GENERATOR</h1>
+        <h2 className="text-2xl">{currentCategory.name}</h2>
+      </header>
+      <main className="w-full outline">
+        <Wheel
+          key={currentCategoryIndex}
+          items={currentCategory.items}
+          onResult={handleResult}
+          {...modeProps}
+        />
+        <ResultsList results={results} />
+      </main>
+    </div>
   );
 }
 
