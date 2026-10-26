@@ -86,6 +86,9 @@ function Wheel(props: WheelProps): React.JSX.Element {
 
   return (
     <div ref={container}>
+      <h2 className="text-2xl text-center">
+        CURRENT CATEGORY: {props.category}
+      </h2>
       <svg viewBox="0 0 500 500">
         <g className="wheel">{paths}</g>
         <circle

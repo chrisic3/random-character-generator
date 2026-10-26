@@ -21,12 +21,14 @@ export type WheelItem = {
 };
 
 type SpinWheelProps = {
+  category: string;
   items: WheelItem[];
   onResult: (winner: string) => void;
   mode: "spin";
 };
 
 type AdvanceWheelProps = {
+  category: string;
   items: WheelItem[];
   onResult: (winner: string) => void;
   mode: "next" | "reset";
