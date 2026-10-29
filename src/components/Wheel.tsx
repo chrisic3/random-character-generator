@@ -99,12 +99,13 @@ function Wheel(props: WheelProps): React.JSX.Element {
           strokeWidth="5"
           fill="none"
         />
-        <path
+        {/* <path
           d="M 250 75 L 235 45 A 17 17 0 1 1 265 45 Z"
           stroke="black"
           fill="yellow"
         />
-        <circle cx="250" cy="35" r="5" stroke="black" fill="black" />
+        <circle cx="250" cy="35" r="5" stroke="black" fill="black" /> */}
+        <polygon points="250,75 240,50 240,30 260,30 260,50" fill="red" />
         <g className="cursor-pointer" onClick={spinWheel}>
           <circle
             cx={WHEEL_CENTER}
