@@ -36,9 +36,9 @@ function App() {
       : ({ mode: "reset", onClick: handleReset } as const);
 
   return (
-    <div className="flex flex-col gap-6 xl:gap-y-15 p-6 items-center">
+    <div className="flex flex-col gap-20 xl:gap-y-15 p-6 items-center">
       <header className="text-center">
-        <h1 className="text-3xl font-bold">RANDOM CHARACTER GENERATOR</h1>
+        <h1 className="text-5xl font-bold">RANDOM CHARACTER GENERATOR</h1>
       </header>
       <main className="flex flex-col gap-6 items-center w-full max-w-5xl xl:flex-row xl:items-start">
         <section className="w-full max-w-2xl">
@@ -50,7 +50,7 @@ function App() {
             {...modeProps}
           />
         </section>
-        <section className="w-full max-w-xs">
+        <section className="w-full max-w-sm">
           <ResultsList results={results} />
         </section>
       </main>

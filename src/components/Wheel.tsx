@@ -14,6 +14,7 @@ import {
   getTotalRotation,
   pickWinningIndex,
 } from "../lib/wheelMath";
+import { colors } from "../data";
 
 gsap.registerPlugin(useGSAP);
 
@@ -43,9 +44,9 @@ function Wheel(props: WheelProps): React.JSX.Element {
       <g key={index}>
         <path
           d={buildPathString(WHEEL_CENTER, WHEEL_RADIUS, slice)}
-          stroke="black"
+          stroke="purple"
           strokeWidth="3"
-          fill="teal"
+          fill={colors[index % colors.length]}
         />
         <text
           x={textX}
@@ -87,7 +88,8 @@ function Wheel(props: WheelProps): React.JSX.Element {
   return (
     <div ref={container}>
       <h2 className="text-2xl text-center">
-        CURRENT CATEGORY: {props.category}
+        <span className="text-3xl font-bold">CURRENT CATEGORY:</span>{" "}
+        {props.category}
       </h2>
       <svg viewBox="0 0 500 500">
         <g className="wheel">{paths}</g>
@@ -95,7 +97,7 @@ function Wheel(props: WheelProps): React.JSX.Element {
           cx={WHEEL_CENTER}
           cy={WHEEL_CENTER}
           r={WHEEL_RADIUS}
-          stroke="salmon"
+          stroke="purple"
           strokeWidth="5"
           fill="none"
         />
@@ -105,13 +107,13 @@ function Wheel(props: WheelProps): React.JSX.Element {
           fill="yellow"
         />
         <circle cx="250" cy="35" r="5" stroke="black" fill="black" /> */}
-        <polygon points="250,75 240,50 240,30 260,30 260,50" fill="red" />
+        <polygon points="250,75 240,50 240,30 260,30 260,50" fill="black" />
         <g className="cursor-pointer" onClick={spinWheel}>
           <circle
             cx={WHEEL_CENTER}
             cy={WHEEL_CENTER}
             r={WHEEL_BUTTON_RADIUS}
-            stroke="black"
+            stroke="purple"
             strokeWidth="3"
             fill="salmon"
           />

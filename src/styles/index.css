@@ -1,1 +1,10 @@
 @import "tailwindcss";
+@font-face {
+  font-family: "GLF Amara";
+  src: url("../assets/fonts/glf-amara.ultrabold.woff2") format("woff2");
+}
+
+body {
+  background-color: #bec5a4;
+  font-family: "GLF Amara", sans-serif;
+}
