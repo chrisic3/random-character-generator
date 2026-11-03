@@ -16,30 +16,42 @@ import {
 } from "../lib/wheelMath";
 import { colors } from "../data";
 
+// Register the useGSAP hook with GSAP (required once before the hook is used)
 gsap.registerPlugin(useGSAP);
 
-// sizes in SVG units (the viewBox is 500 x 500)
+// Sizes in SVG units. The <svg> below has a 500 x 500 viewBox, so the wheel sits in the
+// middle of it, and the whole drawing scales to fit however wide the page is.
 const WHEEL_CENTER = 250;
 const WHEEL_RADIUS = 200;
 const WHEEL_BUTTON_RADIUS = 40;
 
-// spinning wheel for a single category; the center button spins it, then moves on or resets
+// The spinning wheel for a single category.
+// The center button changes with `mode`: it spins the wheel, then (once there is a result)
+// moves to the next category, or resets after the last one. App decides the mode.
 function Wheel(props: WheelProps): React.JSX.Element {
+  // text shown on the center button
   const label =
     props.mode === "spin" ? "Spin" : props.mode === "next" ? "Next" : "Reset";
+  // points at the outer <div> so GSAP only searches inside this component
   const container = useRef<HTMLDivElement>(null);
-  // guards against double clicks starting a second spin
+  // Remembers that a spin has started. A ref is used instead of state because changing it
+  // shouldn't re-render, and it updates immediately, so a quick double click can't start two spins.
   const hasSpinStarted = useRef<boolean>(false);
-  // scope GSAP selectors to this component and clean up animations on unmount
+  // `scope` limits GSAP's ".wheel" selector to this component, and useGSAP cleans up the
+  // animation when the component unmounts. contextSafe wraps functions (like the click
+  // handler below) that run later, so they are tracked and cleaned up too.
   const { contextSafe } = useGSAP({ scope: container });
+  // work out the shape of every slice (angles and edge points) from the number of items
   const slices: Slice[] = getSliceData(
     WHEEL_CENTER,
     WHEEL_RADIUS,
     props.items.length,
   );
-  // one colored wedge + label per item
+  // One colored wedge plus its label for each item. Slices and items are in the same order,
+  // so props.items[index] is always the item that belongs to this slice.
   const paths = slices.map((slice: Slice, index: number): React.JSX.Element => {
-    // put labels halfway between the center button and the outer edge
+    // Put the label halfway between the center button and the outer edge, where
+    // there is the most room for the text
     const { textAngle, textX, textY } = getLabelData(
       WHEEL_CENTER,
       (WHEEL_RADIUS + WHEEL_BUTTON_RADIUS) / 2,
@@ -48,12 +60,16 @@ function Wheel(props: WheelProps): React.JSX.Element {
 
     return (
       <g key={index}>
+        {/* the wedge itself; the colors repeat if there are more slices than colors */}
         <path
           d={buildPathString(WHEEL_CENTER, WHEEL_RADIUS, slice)}
           stroke="purple"
           strokeWidth="3"
           fill={colors[index % colors.length]}
         />
+        {/* textAnchor and dominantBaseline center the text on its x/y point (horizontally
+            and vertically); the transform then rotates it around that same point so it
+            runs along the slice, from the center outward */}
         <text
           x={textX}
           y={textY}
@@ -67,13 +83,19 @@ function Wheel(props: WheelProps): React.JSX.Element {
     );
   });
 
-  // center button handler: spin in "spin" mode, otherwise hand off to the parent (next / reset)
+  // Click handler for the center button.
+  // In "spin" mode it spins the wheel; in "next" / "reset" mode it just calls the parent's
+  // onClick. TypeScript allows props.onClick in the else branch because it can tell
+  // the mode isn't "spin" there (see WheelProps).
   const spinWheel = contextSafe(() => {
     if (props.mode === "spin") {
+      // ignore clicks while a spin is already running
       if (hasSpinStarted.current) return;
       hasSpinStarted.current = true;
 
-      // pick the winner first, then work out the rotation that lands on it (5 full spins first)
+      // The winner is chosen up front, before any animation. The wheel is then rotated to
+      // land on that slice, so the result is decided by the weights, not by the animation.
+      // The 5 is how many full turns to spin before stopping.
       const winningItem = pickWinningIndex(getItemWeights(props.items));
       const landingPosition = getTotalRotation(
         getLandingPosition(winningItem, props.items.length),
@@ -81,7 +103,14 @@ function Wheel(props: WheelProps): React.JSX.Element {
       );
       const winningName = props.items[winningItem].name;
 
-      // rotate around the wheel's center, slowing down at the end, and report the winner once it stops
+      // Animate the ".wheel" group (only inside this component, thanks to the scope):
+      //   rotation  - total degrees to turn, including the extra full spins
+      //   svgOrigin - pivot point in SVG coordinates, so it spins around the wheel's
+      //               center instead of the SVG's top-left corner
+      //   ease      - "power2.out" starts fast and slows down toward the end, like a real wheel
+      //   duration  - seconds the spin takes
+      //   onComplete - runs when the spin stops; this is when the result gets reported,
+      //                so the winner only appears in the list after the wheel has landed
       gsap.to(".wheel", {
         rotation: landingPosition,
         svgOrigin: `${WHEEL_CENTER} ${WHEEL_CENTER}`,
@@ -100,10 +129,12 @@ function Wheel(props: WheelProps): React.JSX.Element {
         <span className="text-3xl font-bold">CURRENT CATEGORY:</span>{" "}
         {props.category}
       </h2>
+      {/* Layers are drawn in order, so later elements appear on top of earlier ones:
+          slices -> rim -> pointer -> center button */}
       <svg viewBox="0 0 500 500">
         {/* only this group rotates; the rim, pointer and button stay still */}
         <g className="wheel">{paths}</g>
-        {/* outer rim */}
+        {/* outer rim: an unfilled circle drawn over the slices' outer edges for a clean border */}
         <circle
           cx={WHEEL_CENTER}
           cy={WHEEL_CENTER}
@@ -118,9 +149,11 @@ function Wheel(props: WheelProps): React.JSX.Element {
           fill="yellow"
         />
         <circle cx="250" cy="35" r="5" stroke="black" fill="black" /> */}
-        {/* pointer at the top that marks the winning slice */}
+        {/* pointer at the top that marks the winning slice: the point (250,75) touches the
+            wheel and the other points make the arrow's body above it */}
         <polygon points="250,75 240,50 240,30 260,30 260,50" fill="black" />
-        {/* center button (Spin / Next / Reset) */}
+        {/* Center button (Spin / Next / Reset). The click handler is on the group so
+            clicking either the circle or the text works. */}
         <g className="cursor-pointer" onClick={spinWheel}>
           <circle
             cx={WHEEL_CENTER}
@@ -130,6 +163,7 @@ function Wheel(props: WheelProps): React.JSX.Element {
             strokeWidth="3"
             fill="salmon"
           />
+          {/* pointerEvents="none" lets clicks pass through the text to the group */}
           <text
             x={WHEEL_CENTER}
             y={WHEEL_CENTER}

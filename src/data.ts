@@ -1,7 +1,11 @@
 import type { Category } from "./types/types";
 
-// wheels are spun in this order
-// items without a winChance split whatever chance is left evenly
+// Every category the user spins through. Wheels are shown in this order, and each
+// category's items become the slices on its wheel.
+// To add a new category or option, just add it here: nothing else needs to change.
+// Items without a winChance split whatever chance is left evenly. A winChance of 0.3
+// means that item wins 30% of the time, which is how "None" is kept to a fair share
+// on the optional features (Horns, Wings, Tail, Familiar).
 export const categories: Category[] = [
   {
     name: "Hair Type",
@@ -134,7 +138,8 @@ export const categories: Category[] = [
   },
 ];
 
-// slice fill colors, reused in order if a wheel has more items than colors
+// Pastel fill colors for the wheel slices. Slice i uses colors[i % colors.length], so the
+// colors repeat from the start if a wheel has more items than there are colors here.
 export const colors: string[] = [
   "#FFB7C5",
   "#E6E6FA",

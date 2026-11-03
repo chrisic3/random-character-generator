@@ -1,11 +1,15 @@
 @import "tailwindcss";
 
-/* custom display font used across the whole app */
+/* Load the custom display font from the assets folder.
+   The family name here is what the body rule below refers to. */
 @font-face {
   font-family: "GLF Amara";
   src: url("../assets/fonts/glf-amara.ultrabold.woff2") format("woff2");
 }
 
+/* Page-wide styles: the sage green background and the custom font for all text,
+   falling back to the browser's default sans-serif if the font fails to load.
+   Everything else is styled with Tailwind classes in the components. */
 body {
   background-color: #bec5a4;
   font-family: "GLF Amara", sans-serif;
