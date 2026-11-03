@@ -1,6 +1,7 @@
 import type React from "react";
 import type { Results } from "../types/types";
 
+// shows each category and the item it landed on, in the order they were spun
 function ResultsList({ results }: { results: Results }): React.JSX.Element {
   return (
     <div className="flex flex-col items-center outline">

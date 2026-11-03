@@ -1,5 +1,7 @@
 import type { Category } from "./types/types";
 
+// wheels are spun in this order
+// items without a winChance split whatever chance is left evenly
 export const categories: Category[] = [
   {
     name: "Hair Type",
@@ -132,6 +134,7 @@ export const categories: Category[] = [
   },
 ];
 
+// slice fill colors, reused in order if a wheel has more items than colors
 export const colors: string[] = [
   "#FFB7C5",
   "#E6E6FA",
