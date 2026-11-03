@@ -10,13 +10,13 @@ export const categories: Category[] = [
   {
     name: "Hair Type",
     items: [
-      { name: "Straight" },
-      { name: "Wavy" },
-      { name: "Curly" },
-      { name: "Short" },
-      { name: "Long" },
+      { name: "Straight", winChance: 0.3 },
+      { name: "Wavy", winChance: 0.3 },
+      { name: "Curly", winChance: 0.3 },
+      { name: "Short", winChance: 0.3 },
+      { name: "Long", winChance: 0.3 },
       { name: "Bald" },
-      { name: "Braided" },
+      { name: "Braided", winChance: 0.3 },
     ],
   },
   {
